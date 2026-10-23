@@ -4,8 +4,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html/src
       - ./public:/var/www/html
+      - ./src:/var/www/src
       - ./config.php:/var/www/config.php
       - ./composer.json:/var/www/composer.json
       - ./vendor:/var/www/vendor
@@ -24,6 +24,7 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
 
   phpmyadmin:
     image: phpmyadmin:latest
