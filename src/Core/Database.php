@@ -39,4 +39,7 @@ class Database
         $row = $this->query($sql, $params)->fetch();
         return $row ?: null;
     }
+        public function lastInsertId(): string{
+        return $this->pdo->lastInsertId();
+    }
 }
