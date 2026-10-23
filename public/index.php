@@ -3,12 +3,13 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-$controllerName = $_GET['controller'] ?? 'Auth';
-$action         = $_GET['action'] ?? 'showLoginForm';
+$controllerName = $_GET['controller'] ?? 'Post';
+$action         = $_GET['action'] ?? 'index';
 
 // Lista blanca: solo estos controladores y acciones son accesibles
 $allowed = [
     'Auth' => ['showRegisterForm', 'register', 'showLoginForm', 'login', 'logout'],
+    'Post' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'],
 ];
 
 if (!isset($allowed[$controllerName]) || !in_array($action, $allowed[$controllerName], true)) {

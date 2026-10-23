@@ -21,4 +21,11 @@ abstract class Controller
     {
         $_SESSION['flash'] = $message;
     }
+    
+        protected function abort(int $code, string $message): void
+    {
+        http_response_code($code);
+        $this->render('error', ['code' => $code, 'message' => $message]);
+        exit;
+    }
 }
