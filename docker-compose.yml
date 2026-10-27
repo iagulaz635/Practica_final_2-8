@@ -1,4 +1,11 @@
 services:
+  composer:
+    image: composer:2
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: dump-autoload
+
   web:
     image: php:8.3-apache
     ports:
@@ -10,7 +17,10 @@ services:
       - ./composer.json:/var/www/composer.json
       - ./vendor:/var/www/vendor
     depends_on:
-      - db
+      db:
+        condition: service_started
+      composer:
+        condition: service_completed_successfully
     command: >
       bash -c "docker-php-ext-install pdo pdo_mysql &&
       apache2-foreground"
