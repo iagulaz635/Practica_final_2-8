@@ -1,5 +1,6 @@
 <h1>Registro</h1>
 <form method="post" action="/index.php?controller=Auth&action=register">
+    <?= \App\Core\Csrf::field() ?>
     <label>Email
         <input type="email" name="email" required>
     </label>

@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
@@ -8,8 +9,9 @@ $action         = $_GET['action'] ?? 'index';
 
 // Lista blanca: solo estos controladores y acciones son accesibles
 $allowed = [
-    'Auth' => ['showRegisterForm', 'register', 'showLoginForm', 'login', 'logout'],
-    'Post' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'],
+    'Auth'    => ['showRegisterForm', 'register', 'showLoginForm', 'login', 'logout'],
+    'Post'    => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'],
+    'Comment' => ['store'],
 ];
 
 if (!isset($allowed[$controllerName]) || !in_array($action, $allowed[$controllerName], true)) {

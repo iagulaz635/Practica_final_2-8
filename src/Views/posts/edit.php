@@ -1,5 +1,10 @@
+<?php
+/** @var array $post */
+/** @var string[] $categories */
+?>
 <h1>Editar anuncio</h1>
 <form method="post" action="/index.php?controller=Post&action=update">
+    <?= \App\Core\Csrf::field() ?>
     <input type="hidden" name="id" value="<?= (int) $post['id'] ?>">
     <label>Título
         <input type="text" name="title" required maxlength="200"

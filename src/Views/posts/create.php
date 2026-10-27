@@ -1,5 +1,10 @@
+<?php
+/** @var string[] $categories */
+/** @var array|null $old */
+?>
 <h1>Nuevo anuncio</h1>
 <form method="post" action="/index.php?controller=Post&action=store">
+    <?= \App\Core\Csrf::field() ?>
     <label>Título
         <input type="text" name="title" required maxlength="200"
                value="<?= htmlspecialchars($old['title'] ?? '') ?>">

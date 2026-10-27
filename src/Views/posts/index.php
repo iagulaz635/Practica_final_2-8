@@ -1,3 +1,7 @@
+<?php
+/** @var array $posts */
+/** @var string $search */
+?>
 <h1>Anuncios</h1>
 
 <form method="get" action="/index.php">

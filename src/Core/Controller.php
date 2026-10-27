@@ -21,11 +21,22 @@ abstract class Controller
     {
         $_SESSION['flash'] = $message;
     }
-    
-        protected function abort(int $code, string $message): void
+
+    protected function abort(int $code, string $message): void
     {
         http_response_code($code);
         $this->render('error', ['code' => $code, 'message' => $message]);
         exit;
+    }
+
+    /**
+     * Se llama al principio de toda acción que reciba un POST.
+     * Si el token no coincide, corta la ejecución con un 403.
+     */
+    protected function verifyCsrf(): void
+    {
+        if (!Csrf::isValid()) {
+            $this->abort(403, 'Token de seguridad no válido. Recarga la página e inténtalo de nuevo.');
+        }
     }
 }

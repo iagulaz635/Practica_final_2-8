@@ -4,16 +4,20 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Database;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
     private Post $posts;
+    private Comment $comments;
 
     public const CATEGORIES = ['Venta', 'Búsqueda', 'Objetos perdidos', 'Proyectos', 'Otros'];
 
     public function __construct()
     {
-        $this->posts = new Post(new Database());
+        $db             = new Database();
+        $this->posts    = new Post($db);
+        $this->comments = new Comment($db);
     }
 
     public function index(): void
@@ -36,7 +40,10 @@ class PostController extends Controller
             $this->abort(404, 'La publicación no existe.');
         }
 
-        $this->render('posts/show', ['post' => $post]);
+        $this->render('posts/show', [
+            'post'     => $post,
+            'comments' => $this->comments->getByPost($id),
+        ]);
     }
 
     public function create(): void
@@ -47,6 +54,7 @@ class PostController extends Controller
 
     public function store(): void
     {
+        $this->verifyCsrf();
         $this->requireLogin();
 
         $title    = trim($_POST['title'] ?? '');
@@ -86,6 +94,7 @@ class PostController extends Controller
 
     public function update(): void
     {
+        $this->verifyCsrf();
         $this->requireLogin();
         $post = $this->findOwnedPost();
 
@@ -115,6 +124,7 @@ class PostController extends Controller
 
     public function destroy(): void
     {
+        $this->verifyCsrf();
         $this->requireLogin();
         $post = $this->findOwnedPost();
 

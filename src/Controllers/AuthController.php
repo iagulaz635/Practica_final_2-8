@@ -21,6 +21,8 @@ class AuthController extends Controller
 
     public function register(): void
     {
+        $this->verifyCsrf();
+
         $email    = trim($_POST['email'] ?? '');
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
@@ -63,6 +65,8 @@ class AuthController extends Controller
 
     public function login(): void
     {
+        $this->verifyCsrf();
+
         $email    = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
@@ -82,6 +86,8 @@ class AuthController extends Controller
 
     public function logout(): void
     {
+        $this->verifyCsrf();
+
         session_destroy();
         session_start();
         $this->setFlash('Has cerrado sesión.');
